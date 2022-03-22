@@ -1,8 +1,6 @@
 package com.accolitedigital.iTracker.controller;
 
-import com.accolitedigital.iTracker.model.Employee;
 import com.accolitedigital.iTracker.model.Interview;
-import com.accolitedigital.iTracker.service.EmployeeService;
 import com.accolitedigital.iTracker.service.InterviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

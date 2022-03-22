@@ -5,7 +5,13 @@ import com.accolitedigital.iTracker.model.Interview;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -66,4 +72,20 @@ public class RecruiterService {
         }
         return interviews;
     }
+
+        public void downloadCSVFile(PrintWriter printWriter, List<Interview> interviews) throws ParseException {
+            printWriter.write("id,name,date,time\n");
+            for (Interview interview:interviews ) {
+                if(interview.getFlexibility().equals("Recurring")){
+                    LocalDate startDate=LocalDate.parse(interview.getDate());
+                    LocalDate endDate = LocalDate.parse(interview.getEndDate());
+                    while(startDate.isBefore(endDate)){
+                        printWriter.write(String.valueOf(interview.getId())+','+interview.getName()+','+startDate +','+interview.getTime()+'\n');
+                        startDate=startDate.plusDays(7);
+                    }
+                }
+                else
+                    printWriter.write(String.valueOf(interview.getId())+','+interview.getName()+','+interview.getDate()+','+interview.getTime()+'\n');
+            }
+        }
 }
