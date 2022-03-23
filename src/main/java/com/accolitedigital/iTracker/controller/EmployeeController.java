@@ -27,8 +27,7 @@ public class EmployeeController {
 
     @GetMapping("/get/{id}")
     public Employee individual(@PathVariable Integer id){
-        Employee employee = employeeService.getEmployee(id);
-        return employee;
+        return employeeService.getEmployee(id);
     }
 
     @PutMapping("/update/{id}")
@@ -42,5 +41,4 @@ public class EmployeeController {
         employeeService.deleteEmployee(id);
         return "Employee with id "+id+" is deleted!";
     }
-
 }

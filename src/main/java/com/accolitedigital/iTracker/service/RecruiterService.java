@@ -6,12 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.PrintWriter;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -73,7 +70,7 @@ public class RecruiterService {
         return interviews;
     }
 
-        public void downloadCSVFile(PrintWriter printWriter, List<Interview> interviews) throws ParseException {
+        public void downloadCSVFile(PrintWriter printWriter, List<Interview> interviews) {
             printWriter.write("id,name,date,time\n");
             for (Interview interview:interviews ) {
                 if(interview.getFlexibility().equals("Recurring")){
