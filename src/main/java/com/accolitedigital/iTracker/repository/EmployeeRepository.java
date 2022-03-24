@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
+    Employee findByEmployeeName(String employeeName);
     List<Employee> findByPrimarySkill(String primarySkill);
     List<Employee> findBySecondarySkill(String secondarySkill);
     List<Employee> findByTertiarySkill(String tertiarySkill);
