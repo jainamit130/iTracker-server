@@ -47,8 +47,8 @@ public class Employee {
         return roles;
     }
 
-    public void setRoles(String role) {
-        this.roles = role;
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
     public String getPrimarySkill() {

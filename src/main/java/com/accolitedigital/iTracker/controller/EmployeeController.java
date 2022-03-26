@@ -20,6 +20,12 @@ public class EmployeeController {
         return "New employee is added";
     }
 
+    @PostMapping("/addAll")
+    public String addAll(@RequestBody List<Employee> employee){
+        employeeService.saveAllEmployee(employee);
+        return "New employees are added";
+    }
+
     @GetMapping("/getAll")
     public List<Employee> list(){
         return employeeService.getAllEmployees();
@@ -41,4 +47,5 @@ public class EmployeeController {
         employeeService.deleteEmployee(id);
         return "Employee with id "+id+" is deleted!";
     }
+
 }

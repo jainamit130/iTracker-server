@@ -51,20 +51,20 @@ public class TurboController {
     }
 
     @GetMapping("/{interviewers}")
-    public Long weeklyInterviewsNo(@PathVariable String interviewers){
+    public String weeklyInterviewsNo(@PathVariable String interviewers){
         long count=turboService.countWeeklyInterviews(interviewers);
-        return count;
+        return "{\"weekly\":"+count+"}";
     }
 
     @GetMapping("/{interviewers}/{startDate}&{endDate}")
-    public Long interviewsInBetweenRange(@PathVariable String interviewers,@PathVariable String startDate,@PathVariable String endDate){
+    public String interviewsInBetweenRange(@PathVariable String interviewers,@PathVariable String startDate,@PathVariable String endDate){
         long count=turboService.countInterviewsBetweenRange(interviewers,startDate,endDate);
-        return count;
+        return "{\"yearToDate\":"+count+"}";
     }
 
     @GetMapping("/{interviewers}/currentMonth")
-    public Long interviewsThisMonth(@PathVariable String interviewers){
+    public String interviewsThisMonth(@PathVariable String interviewers){
         long count=turboService.countInterviewsThisMonth(interviewers);
-        return count;
+        return "{\"currentMonth\":"+count+"}";
     }
 }
