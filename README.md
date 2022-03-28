@@ -1,11 +1,10 @@
 # iTracker-server
 
-![1](https://user-images.githubusercontent.com/98075085/159350132-2cacc9c1-8a74-4bd1-b4a1-cdee6531659f.jpg)
-
-![2](https://user-images.githubusercontent.com/98075085/159350147-c35fdc50-58b8-4f12-9ce9-77c57007f9e5.jpg)
-
-![3](https://user-images.githubusercontent.com/98075085/159350155-66e603bd-3059-4376-a263-8cc49fea55ac.jpg)
-
-![4](https://user-images.githubusercontent.com/98075085/159350168-2c4ca8ee-347c-4033-9a4d-802e83e3b12b.jpg)
-
-![5](https://user-images.githubusercontent.com/98075085/159350174-e772b3b5-4414-466d-ac9c-36d6f533bc7d.jpg)
+![iTrackerBakcend Design_page-0001](https://user-images.githubusercontent.com/98075085/160379306-d6d87afb-467f-473e-9423-df939aefe9c0.jpg)
+![iTrackerBakcend Design_page-0002](https://user-images.githubusercontent.com/98075085/160379321-585414f5-a41a-4766-90a9-8e9c0778d2b5.jpg)
+![iTrackerBakcend Design_page-0003](https://user-images.githubusercontent.com/98075085/160379329-0265756c-b33c-48fe-bdd5-bccb3e53d756.jpg)
+![iTrackerBakcend Design_page-0004](https://user-images.githubusercontent.com/98075085/160379340-25c81454-2c94-4b0b-a379-43abeac6affe.jpg)
+![iTrackerBakcend Design_page-0005](https://user-images.githubusercontent.com/98075085/160379349-5f14121b-4966-448f-8127-c6cae87a4416.jpg)
+![iTrackerBakcend Design_page-0006](https://user-images.githubusercontent.com/98075085/160379360-51340ad1-fc72-4f2b-9483-d7873b03be63.jpg)
+![iTrackerBakcend Design_page-0007](https://user-images.githubusercontent.com/98075085/160379366-29001fba-ce70-4337-ba33-88c90e92624d.jpg)
+![iTrackerBakcend Design_page-0008](https://user-images.githubusercontent.com/98075085/160379371-4cfdf3a0-c4ee-40c4-a248-968065716dc2.jpg)
