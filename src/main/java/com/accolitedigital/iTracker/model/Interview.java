@@ -11,10 +11,8 @@ public class Interview {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
-    private String flexibility;
     private String date;
     private String endDate;
-    private String time;
 
     public Interview() {
     }
@@ -35,13 +33,6 @@ public class Interview {
         this.name = name;
     }
 
-    public String getFlexibility() {
-        return flexibility;
-    }
-
-    public void setFlexibility(String flexibility) {
-        this.flexibility = flexibility;
-    }
 
     public String getDate() {
         return date;
@@ -51,13 +42,6 @@ public class Interview {
         this.date = date;
     }
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
 
     public String getEndDate() {
         return endDate;

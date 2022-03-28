@@ -56,7 +56,7 @@ public class TurboController {
         return "{\"weekly\":"+count+"}";
     }
 
-    @GetMapping("/{interviewers}/{startDate}&{endDate}")
+    @GetMapping("/{interviewers}/{startDate}/{endDate}")
     public String interviewsInBetweenRange(@PathVariable String interviewers,@PathVariable String startDate,@PathVariable String endDate){
         long count=turboService.countInterviewsBetweenRange(interviewers,startDate,endDate);
         return "{\"yearToDate\":"+count+"}";

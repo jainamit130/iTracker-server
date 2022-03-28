@@ -48,7 +48,7 @@ public class InterviewServiceImpl implements InterviewService {
 
     @Override
     public List<Interview> getInterviewsBetweenGivenRange(String startDate, String endDate) {
-        return interviewRepository.findByDateBetween(startDate,endDate);
+        return interviewRepository.findByDateBetween(startDate+"T00:00:00.000Z",endDate+"T23:59:59.999Z");
     }
 
     @Override

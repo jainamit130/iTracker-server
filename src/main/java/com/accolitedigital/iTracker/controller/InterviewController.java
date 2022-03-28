@@ -53,7 +53,7 @@ public class InterviewController {
     @GetMapping("/")
     public List<Interview> todaysInterview(){ return interviewService.getTodayInterviews(); }
 
-    @GetMapping("/startDate={startDate}&endDate={endDate}")
+    @GetMapping("/{startDate}/{endDate}")
     public List<Interview> interviewsInGivenRange(@PathVariable String startDate,@PathVariable String endDate){
         return interviewService.getInterviewsBetweenGivenRange(startDate,endDate);
     }
@@ -61,7 +61,7 @@ public class InterviewController {
     @PutMapping("/update/{id}")
     public String update(@PathVariable Integer id,@RequestBody Interview interview){
         interviewService.updateInterview(id,interview);
-        return "Interview Slot with "+id+" is now updated!";
+        return "Interview Slot with id "+id+" is now updated!";
     }
 
     @DeleteMapping("/delete/{id}")

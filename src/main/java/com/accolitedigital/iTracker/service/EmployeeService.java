@@ -11,6 +11,7 @@ public interface EmployeeService {
     Employee getEmployee(Integer id);
     Employee updateEmployee(Integer id, Employee employee);
     void deleteEmployee(Integer id);
+    Employee getEmployeeByName(String name);
     List<Employee> getEmployeesOnPrimarySkill(String primarySkill);
     List<Employee> getEmployeesOnSecondarySkill(String skill);
     List<Employee> getEmployeesOnTertiarySkill(String skill);
