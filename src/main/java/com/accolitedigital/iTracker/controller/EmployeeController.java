@@ -31,19 +31,17 @@ public class EmployeeController {
         return employeeService.getAllEmployees();
     }
 
-    @GetMapping("/get/{id}")
-    public Employee individual(@PathVariable Integer id){
-        return employeeService.getEmployee(id);
-    }
+    @GetMapping("/get")
+    public Employee usersByName(@RequestHeader String name) { return employeeService.getEmployeeByName(name); }
 
-    @PutMapping("/update/{id}")
-    public String update(@PathVariable Integer id,@RequestBody Employee employee){
+    @PutMapping("/update")
+    public String update(@RequestHeader Integer id,@RequestBody Employee employee){
         employeeService.updateEmployee(id,employee);
         return "Employee "+id+" updated!";
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable Integer id){
+    @DeleteMapping("/delete")
+    public String delete(@RequestHeader Integer id){
         employeeService.deleteEmployee(id);
         return "Employee with id "+id+" is deleted!";
     }

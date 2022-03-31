@@ -12,13 +12,4 @@ public interface EmployeeService {
     Employee updateEmployee(Integer id, Employee employee);
     void deleteEmployee(Integer id);
     Employee getEmployeeByName(String name);
-    List<Employee> getEmployeesOnPrimarySkill(String primarySkill);
-    List<Employee> getEmployeesOnSecondarySkill(String skill);
-    List<Employee> getEmployeesOnTertiarySkill(String skill);
-    List<Employee> getEmployeesOnPrimarySkillRound(Integer round);
-    List<Employee> getEmployeesOnSecondarySkillRound(Integer round);
-    List<Employee> getEmployeesOnTertiarySkillRound(Integer round);
-    List<Employee> getEmployeesOnPrimarySkillAndRound(String skill, Integer round);
-    List<Employee> getEmployeesOnSecondarySkillAndRound(String skill, Integer round);
-    List<Employee> getEmployeesOnTertiarySkillAndRound(String skill, Integer round);
 }

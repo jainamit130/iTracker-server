@@ -7,12 +7,10 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -29,7 +27,7 @@ public class TurboController {
 
     @Scheduled(cron = "0 0 0 * * ?")
     @GetMapping("/load")
-    public String getData() throws JsonProcessingException {
+    public String getData() throws JsonProcessingException, ParseException {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         Date date = new Date();
@@ -50,21 +48,34 @@ public class TurboController {
         return "All the Turbohire data is added to database!";
     }
 
-    @GetMapping("/{interviewers}")
-    public String weeklyInterviewsNo(@PathVariable String interviewers){
+    @GetMapping("/interviewer")
+    public String weeklyInterviewsNo(@RequestHeader String interviewers){
         long count=turboService.countWeeklyInterviews(interviewers);
         return "{\"weekly\":"+count+"}";
     }
 
-    @GetMapping("/{interviewers}/{startDate}/{endDate}")
-    public String interviewsInBetweenRange(@PathVariable String interviewers,@PathVariable String startDate,@PathVariable String endDate){
+    @GetMapping("/interviewsTakenBetweenDates")
+    public String interviewsInBetweenRange(@RequestHeader String interviewers,@RequestHeader Long startDate,@RequestHeader Long endDate){
         long count=turboService.countInterviewsBetweenRange(interviewers,startDate,endDate);
+        return "{\"StartToEndDate\":"+count+"}";
+    }
+
+    @GetMapping("/currentMonth")
+    public String interviewsThisMonth(@RequestHeader String interviewer){
+        long count=turboService.countInterviewsThisMonth(interviewer);
+        return "{\"currentMonth\":"+count+"}";
+    }
+
+    @GetMapping("/yearToDate")
+    public String interviewsThisYear(@RequestHeader String interviewer){
+        long count=turboService.countInterviewsThisYear(interviewer);
         return "{\"yearToDate\":"+count+"}";
     }
 
-    @GetMapping("/{interviewers}/currentMonth")
-    public String interviewsThisMonth(@PathVariable String interviewers){
-        long count=turboService.countInterviewsThisMonth(interviewers);
-        return "{\"currentMonth\":"+count+"}";
+    @GetMapping("/lastQuarter")
+    public String interviewsLastQuarter(@RequestHeader String interviewer){
+        long count=turboService.countInterviewsLastQuarter(interviewer);
+        return "{\"lastQuarter\":"+count+"}";
     }
 }
+

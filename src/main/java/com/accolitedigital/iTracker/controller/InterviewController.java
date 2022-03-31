@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -20,21 +18,14 @@ public class InterviewController {
 
     @PostMapping("/add")
     public String add(@RequestBody Interview interview) throws ParseException {
-        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
 
         Calendar now1= Calendar.getInstance();
         now1.add(Calendar.DATE, +14);
-        String possibleSlotStartString=dateFormat.format(now1.getTime());
-        Date possibleSlotStart=dateFormat.parse(possibleSlotStartString);
 
         Calendar now2= Calendar.getInstance();
         now2.add(Calendar.DATE,+44);
-        String possibleEndSlotString=dateFormat.format(now2.getTime());
-        Date possibleEndSlot=dateFormat.parse(possibleEndSlotString);
 
-        Date interviewStartDate=dateFormat.parse(interview.getDate());
-
-        if(interviewStartDate.before(possibleEndSlot) && interviewStartDate.after(possibleSlotStart)) {
+        if(interview.getDate()< now2.getTimeInMillis() && interview.getDate()> now1.getTimeInMillis()) {
             interviewService.saveInterview(interview);
             return "New interview is added";
         }
@@ -47,25 +38,25 @@ public class InterviewController {
         return interviewService.getAllInterviews();
     }
 
-    @GetMapping("/{id}")
-    public Interview basedOnId(@PathVariable Integer id){ return interviewService.getInterview(id);}
+    @GetMapping("/get")
+    public List<Interview> basedOnName(@RequestHeader String name){ return interviewService.getInterviewsFromName(name);}
 
     @GetMapping("/")
     public List<Interview> todaysInterview(){ return interviewService.getTodayInterviews(); }
 
-    @GetMapping("/{startDate}/{endDate}")
-    public List<Interview> interviewsInGivenRange(@PathVariable String startDate,@PathVariable String endDate){
+    @GetMapping("/interviewsBasedOnDate")
+    public List<Interview> interviewsInGivenRange(@RequestHeader Long startDate,@RequestHeader Long endDate){
         return interviewService.getInterviewsBetweenGivenRange(startDate,endDate);
     }
 
-    @PutMapping("/update/{id}")
-    public String update(@PathVariable Integer id,@RequestBody Interview interview){
+    @PutMapping("/update")
+    public String update(@RequestHeader Integer id,@RequestBody Interview interview){
         interviewService.updateInterview(id,interview);
         return "Interview Slot with id "+id+" is now updated!";
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable Integer id){
+    @DeleteMapping("/delete")
+    public String delete(@RequestHeader Integer id){
         interviewService.deleteInterview(id);
         return "Interview Slot with id "+id+" is deleted!";
     }

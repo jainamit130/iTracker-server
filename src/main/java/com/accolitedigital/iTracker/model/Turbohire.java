@@ -12,17 +12,19 @@ public class Turbohire {
 	@Id
 	@JsonProperty
 	@Column(name = "id")
-    private String RecordId;
+	private String RecordId;
 	@JsonProperty
-    private String ApplicantName;
+	private String ApplicantName;
 	@JsonProperty("Interviewers")
-    private String interviewers;
+	private String interviewers;
 	@JsonProperty
-    private String Category;
+	private String Category;
 	@JsonProperty
-    private String JobStage;
+	private String JobStage;
 	@JsonProperty("EvaluationDateTime")
-    private String evaluationDateTime;
+	private String evaluationDateTime;
+	@JsonProperty("DateTimeInMilli")
+	private Long dateTimeInMilli;
 
 	public String getRecordId() {
 		return RecordId;
@@ -70,15 +72,11 @@ public class Turbohire {
 		this.evaluationDateTime = evaluationDateTime;
 	}
 
-	@Override
-	public String toString() {
-		return "Turbohire{" +
-				"RecordId='" + RecordId + '\'' +
-				", ApplicantName='" + ApplicantName + '\'' +
-				", interviewers='" + interviewers + '\'' +
-				", Category='" + Category + '\'' +
-				", JobStage='" + JobStage + '\'' +
-				", evaluationDateTime='" + evaluationDateTime + '\'' +
-				'}';
+	public Long getDateTimeInMilli() {
+		return dateTimeInMilli;
+	}
+
+	public void setDateTimeInMilli(Long dateTimeInMilli) {
+		this.dateTimeInMilli = dateTimeInMilli;
 	}
 }

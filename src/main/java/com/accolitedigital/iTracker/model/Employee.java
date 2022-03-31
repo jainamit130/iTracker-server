@@ -1,6 +1,7 @@
 package com.accolitedigital.iTracker.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "employees")
@@ -12,12 +13,8 @@ public class Employee {
     private String employeeName;
     private String employeePassword;
     private String roles;
-    private String primarySkill;
-    private String secondarySkill;
-    private String tertiarySkill;
-    private int primaryRound;
-    private int secondaryRound;
-    private int tertiaryRound;
+    @ElementCollection
+    private List<String> skills;
 
     public int getId() {
         return id;
@@ -51,52 +48,11 @@ public class Employee {
         this.roles = roles;
     }
 
-    public String getPrimarySkill() {
-        return primarySkill;
+    public List<String> getSkills() {
+        return skills;
     }
 
-    public void setPrimarySkill(String primary) {
-        this.primarySkill = primary;
+    public void setSkills(List<String> skills) {
+        this.skills = skills;
     }
-
-    public String getSecondarySkill() {
-        return secondarySkill;
-    }
-
-    public void setSecondarySkill(String secondary) {
-        this.secondarySkill = secondary;
-    }
-
-    public String getTertiarySkill() {
-        return tertiarySkill;
-    }
-
-    public void setTertiarySkill(String tertiary) {
-        this.tertiarySkill = tertiary;
-    }
-
-    public int getPrimaryRound() {
-        return primaryRound;
-    }
-
-    public void setPrimaryRound(int primaryRound) {
-        this.primaryRound = primaryRound;
-    }
-
-    public int getSecondaryRound() {
-        return secondaryRound;
-    }
-
-    public void setSecondaryRound(int secondaryRound) {
-        this.secondaryRound = secondaryRound;
-    }
-
-    public int getTertiaryRound() {
-        return tertiaryRound;
-    }
-
-    public void setTertiaryRound(int tertiaryRound) {
-        this.tertiaryRound = tertiaryRound;
-    }
-
 }

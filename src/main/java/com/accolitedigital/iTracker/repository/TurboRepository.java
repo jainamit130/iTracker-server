@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface TurboRepository  extends JpaRepository<Turbohire,String> {
     List<Turbohire> findByInterviewers(String interviewers);
-    List<Turbohire> findByInterviewersAndEvaluationDateTimeBetween
-            (String interviewers,String startDate, String endDate);
+    List<Turbohire> findByInterviewersAndDateTimeInMilliBetween
+            (String interviewers,Long startDate, Long endDate);
 }

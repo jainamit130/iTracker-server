@@ -1,13 +1,13 @@
 package com.accolitedigital.iTracker.service;
 
 import com.accolitedigital.iTracker.model.Interview;
+import com.accolitedigital.iTracker.repository.EmployeeRepository;
 import com.accolitedigital.iTracker.repository.InterviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Service
@@ -15,9 +15,12 @@ public class InterviewServiceImpl implements InterviewService {
 
     @Autowired
     private InterviewRepository interviewRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @Override
     public Interview saveInterview(Interview interview) {
+        interview.setEmployee(employeeRepository.findByEmployeeName(interview.getName()));
         return interviewRepository.save(interview);
     }
 
@@ -25,9 +28,6 @@ public class InterviewServiceImpl implements InterviewService {
     public List<Interview> getAllInterviews() {
         return interviewRepository.findAll();
     }
-
-    @Override
-    public  Interview getInterview(Integer id) { return interviewRepository.findById(id).get();}
 
     @Override
     public Interview updateInterview(Integer id, Interview updatedInterview){
@@ -40,15 +40,15 @@ public class InterviewServiceImpl implements InterviewService {
 
     @Override
     public List<Interview> getTodayInterviews() {
-        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        String currentDate = dateFormat.format(date);
-        return interviewRepository.findByDate(currentDate);
+        LocalDateTime now = LocalDateTime.now();
+        long startDate= now.toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli();
+        long endDate=now.plusDays(1).toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli();
+        return interviewRepository.findByDateBetween(startDate,endDate);
     }
 
     @Override
-    public List<Interview> getInterviewsBetweenGivenRange(String startDate, String endDate) {
-        return interviewRepository.findByDateBetween(startDate+"T00:00:00.000Z",endDate+"T23:59:59.999Z");
+    public List<Interview> getInterviewsBetweenGivenRange(Long startDate, Long endDate) {
+        return interviewRepository.findByDateBetween(startDate,endDate);
     }
 
     @Override

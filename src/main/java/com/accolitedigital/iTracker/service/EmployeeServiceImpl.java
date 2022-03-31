@@ -57,52 +57,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee getEmployeeByName(String name){
         return employeeRepository.findByEmployeeName(name);
     }
-
-    @Override
-    public List<Employee> getEmployeesOnPrimarySkill(String primarySkill) {
-        return employeeRepository.findByPrimarySkill(primarySkill);
-    }
-
-    @Override
-    public List<Employee> getEmployeesOnSecondarySkill(String skill) {
-        return employeeRepository.findBySecondarySkill(skill);
-    }
-
-    @Override
-    public List<Employee> getEmployeesOnTertiarySkill(String skill) {
-        return employeeRepository.findByTertiarySkill(skill);
-    }
-
-    @Override
-    public List<Employee> getEmployeesOnPrimarySkillRound(Integer round) {
-        return employeeRepository.findByPrimaryRound(round);
-    }
-
-    @Override
-    public List<Employee> getEmployeesOnSecondarySkillRound(Integer round) {
-        return employeeRepository.findBySecondaryRound(round);
-    }
-
-    @Override
-    public List<Employee> getEmployeesOnTertiarySkillRound(Integer round) {
-        return employeeRepository.findByTertiaryRound(round);
-    }
-
-    @Override
-    public List<Employee> getEmployeesOnPrimarySkillAndRound(String skill, Integer round) {
-        return employeeRepository.findByPrimarySkillAndPrimaryRound(skill,round);
-    }
-
-    @Override
-    public List<Employee> getEmployeesOnSecondarySkillAndRound(String skill, Integer round) {
-        return employeeRepository.findBySecondarySkillAndSecondaryRound(skill,round);
-    }
-
-    @Override
-    public List<Employee> getEmployeesOnTertiarySkillAndRound(String skill, Integer round) {
-        return employeeRepository.findByTertiarySkillAndTertiaryRound(skill,round);
-    }
-
 }
 
 

@@ -20,29 +20,29 @@ public class RecruiterController {
     private RecruiterService recruiterService;
     List<Interview> interviews=new ArrayList<>();
 
-    @GetMapping("/get/{skillType}/skill={skill}")
-    public List<Interview> employeesOnSkill(@PathVariable String skillType,@PathVariable String skill){
-        interviews= recruiterService.getInterviewsOnSkill(skill,skillType);
-        return interviews;
-    }
-
-    @GetMapping("/get/{skillType}/round={round}")
-    public List<Interview> employeesOnRound(@PathVariable String skillType,@PathVariable Integer round){
-        interviews= recruiterService.getInterviewsOnRound(round,skillType);
-        return interviews;
-    }
-
-    @GetMapping("/get/{skillType}/skill={skill}/round={round}")
-    public List<Interview> employeesOnSkillAndRound(@PathVariable String skillType,@PathVariable String skill,@PathVariable Integer round){
-        interviews= recruiterService.getInterviewsOnSkillAndRound(skillType,skill,round);
-        return interviews;
-    }
-
-    @GetMapping("download/csv")
-    public void downloadCSV(HttpServletResponse response) throws IOException, ParseException {
-        response.setContentType("text/csv");
-        response.setHeader("Content:disposition","application;attachment:interview.csv");
-        recruiterService.downloadCSVFile(response.getWriter(),interviews);
-    }
+//    @GetMapping("/get/{skillType}/skill={skill}")
+//    public List<Interview> employeesOnSkill(@PathVariable String skillType,@PathVariable String skill){
+//        interviews= recruiterService.getInterviewsOnSkill(skill,skillType);
+//        return interviews;
+//    }
+//
+//    @GetMapping("/get/{skillType}/round={round}")
+//    public List<Interview> employeesOnRound(@PathVariable String skillType,@PathVariable Integer round){
+//        interviews= recruiterService.getInterviewsOnRound(round,skillType);
+//        return interviews;
+//    }
+//
+//    @GetMapping("/get/{skillType}/skill={skill}/round={round}")
+//    public List<Interview> employeesOnSkillAndRound(@PathVariable String skillType,@PathVariable String skill,@PathVariable Integer round){
+//        interviews= recruiterService.getInterviewsOnSkillAndRound(skillType,skill,round);
+//        return interviews;
+//    }
+//
+//    @GetMapping("download/csv")
+//    public void downloadCSV(HttpServletResponse response) throws IOException, ParseException {
+//        response.setContentType("text/csv");
+//        response.setHeader("Content:disposition","application;attachment:interview.csv");
+//        recruiterService.downloadCSVFile(response.getWriter(),interviews);
+//    }
 
 }
