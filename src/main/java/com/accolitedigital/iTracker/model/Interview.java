@@ -1,5 +1,7 @@
 package com.accolitedigital.iTracker.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,10 +10,17 @@ public class Interview {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String name;
+    @JsonProperty("name")
+    private String email;
     private String skill;
     private String round;
     private Long date;
+    /*
+    recurringType
+    True= All Days between the start and end date (by default)
+    False= One Day in a week
+     */
+    private Boolean recurringType;
     private Long endDate;
     @ManyToOne
     @JoinColumn(name = "employee_id")
@@ -28,12 +37,12 @@ public class Interview {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getEmail() {
+        return email;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Long getDate() {

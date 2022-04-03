@@ -1,5 +1,7 @@
 package com.accolitedigital.iTracker.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -10,9 +12,14 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String employeeName;
-    private String employeePassword;
-    private String roles;
+    @Column(nullable = true, length = 64)
+    private String profilePicture;
+    @JsonProperty("employeeName")
+    private String email;
+    @JsonProperty("employeePassword")
+    private String password;
+    @JsonProperty("roles")
+    private String role;
     @ElementCollection
     private List<String> skills;
 
@@ -20,32 +27,40 @@ public class Employee {
         return id;
     }
 
-    public void setEmployeeId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getEmployeeName() {
-        return employeeName;
+    public String getProfilePicture() {
+        return profilePicture;
     }
 
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
-    public String getEmployeePassword() {
-        return employeePassword;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmployeePassword(String employeePassword) {
-        this.employeePassword = employeePassword;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getRoles() {
-        return roles;
+    public String getPassword() {
+        return password;
     }
 
-    public void setRoles(String roles) {
-        this.roles = roles;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String roles) {
+        this.role = roles;
     }
 
     public List<String> getSkills() {
@@ -55,4 +70,5 @@ public class Employee {
     public void setSkills(List<String> skills) {
         this.skills = skills;
     }
+
 }

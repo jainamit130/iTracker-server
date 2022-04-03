@@ -18,18 +18,18 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority simpleGrantedAuthority=new SimpleGrantedAuthority(employee.getRoles());
+        SimpleGrantedAuthority simpleGrantedAuthority=new SimpleGrantedAuthority(employee.getRole());
         return List.of(simpleGrantedAuthority);
     }
 
     @Override
     public String getPassword() {
-        return employee.getEmployeePassword();
+        return employee.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return employee.getEmployeeName();
+        return employee.getEmail();
     }
 
     @Override

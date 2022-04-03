@@ -48,34 +48,20 @@ public class TurboController {
         return "All the Turbohire data is added to database!";
     }
 
-    @GetMapping("/interviewer")
-    public String weeklyInterviewsNo(@RequestHeader String interviewers){
-        long count=turboService.countWeeklyInterviews(interviewers);
-        return "{\"weekly\":"+count+"}";
-    }
-
-    @GetMapping("/interviewsTakenBetweenDates")
-    public String interviewsInBetweenRange(@RequestHeader String interviewers,@RequestHeader Long startDate,@RequestHeader Long endDate){
-        long count=turboService.countInterviewsBetweenRange(interviewers,startDate,endDate);
-        return "{\"StartToEndDate\":"+count+"}";
-    }
-
-    @GetMapping("/currentMonth")
-    public String interviewsThisMonth(@RequestHeader String interviewer){
-        long count=turboService.countInterviewsThisMonth(interviewer);
-        return "{\"currentMonth\":"+count+"}";
-    }
-
-    @GetMapping("/yearToDate")
-    public String interviewsThisYear(@RequestHeader String interviewer){
-        long count=turboService.countInterviewsThisYear(interviewer);
-        return "{\"yearToDate\":"+count+"}";
-    }
-
-    @GetMapping("/lastQuarter")
-    public String interviewsLastQuarter(@RequestHeader String interviewer){
-        long count=turboService.countInterviewsLastQuarter(interviewer);
-        return "{\"lastQuarter\":"+count+"}";
+    @GetMapping("/stats")
+    public String interviewsStats(@RequestHeader String interviewer,@RequestHeader(required = false)Long startDate,@RequestHeader(required = false)Long endDate){
+        long monthlyCount=turboService.countInterviewsThisMonth(interviewer);
+        long yearlyCount=turboService.countInterviewsThisYear(interviewer);
+        long quarterlyCount=turboService.countInterviewsLastQuarter(interviewer);
+        long weeklyCount=turboService.countWeeklyInterviews(interviewer);
+        long rangeCount=0;
+        if(startDate!=null && endDate!=null)
+        rangeCount=turboService.countInterviewsBetweenRange(interviewer,startDate,endDate);
+        return "{\"currentMonth\":"+monthlyCount+","+
+                "\"yearToDate\":"+yearlyCount+","+
+                "\"lastQuarter\":"+quarterlyCount+","+
+                "\"lastWeek\":"+weeklyCount+","+
+                "\"inGivenRange\":"+rangeCount+"}";
     }
 }
 

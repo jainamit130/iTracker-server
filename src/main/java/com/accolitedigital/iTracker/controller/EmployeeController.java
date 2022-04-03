@@ -15,7 +15,7 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @PostMapping("/add")
-    public String add(@RequestBody Employee employee){
+    public String add(@RequestBody Employee employee) {
         employeeService.saveEmployee(employee);
         return "New employee is added";
     }
@@ -32,7 +32,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/get")
-    public Employee usersByName(@RequestHeader String name) { return employeeService.getEmployeeByName(name); }
+    public Employee usersByName(@RequestHeader String name) { return employeeService.getEmployeeByEmail(name); }
 
     @PutMapping("/update")
     public String update(@RequestHeader Integer id,@RequestBody Employee employee){

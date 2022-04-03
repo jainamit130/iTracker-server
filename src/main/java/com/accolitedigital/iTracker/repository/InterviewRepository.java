@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface InterviewRepository extends JpaRepository<Interview,Integer> {
-    List<Interview> findByName(String name);
+    List<Interview> findByEmail(String email);
     List<Interview> findByDateBetween(Long startDate,Long endDate);
 }

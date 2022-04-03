@@ -1,6 +1,8 @@
 package com.accolitedigital.iTracker.service;
+
 import com.accolitedigital.iTracker.model.Employee;
 import com.accolitedigital.iTracker.repository.EmployeeRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,14 +24,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee saveEmployee(Employee employee) {
-        employee.setEmployeePassword(passwordEncoder.encode(employee.getEmployeePassword()));
+        employee.setPassword(passwordEncoder.encode(employee.getPassword()));
         return employeeRepository.save(employee);
     }
 
     @Override
     public List<Employee> saveAllEmployee(List<Employee> employees){
         for (Employee employee:employees) {
-            employee.setEmployeePassword(passwordEncoder.encode(employee.getEmployeePassword()));
+            employee.setPassword(passwordEncoder.encode(employee.getPassword()));
             employeeRepository.save(employee);
         }
         return employees;
@@ -41,11 +43,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee getEmployee(Integer id){ return employeeRepository.findById(id).get();}
-
-    @Override
     public Employee updateEmployee(Integer id,Employee updatedEmployee){
-        updatedEmployee.setEmployeePassword(passwordEncoder.encode(updatedEmployee.getEmployeePassword()));
+        updatedEmployee.setPassword(passwordEncoder.encode(updatedEmployee.getPassword()));
         return employeeRepository.save(updatedEmployee);
     }
 
@@ -54,8 +53,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.deleteById(id); }
 
     @Override
-    public Employee getEmployeeByName(String name){
-        return employeeRepository.findByEmployeeName(name);
+    public Employee getEmployeeByEmail(String name){
+        return employeeRepository.findByEmail(name);
     }
 }
 

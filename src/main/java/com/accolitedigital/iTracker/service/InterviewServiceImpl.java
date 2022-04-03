@@ -20,7 +20,7 @@ public class InterviewServiceImpl implements InterviewService {
 
     @Override
     public Interview saveInterview(Interview interview) {
-        interview.setEmployee(employeeRepository.findByEmployeeName(interview.getName()));
+        interview.setEmployee(employeeRepository.findByEmail(interview.getEmail()));
         return interviewRepository.save(interview);
     }
 
@@ -53,7 +53,7 @@ public class InterviewServiceImpl implements InterviewService {
 
     @Override
     public List<Interview> getInterviewsFromName(String name) {
-        return interviewRepository.findByName(name);
+        return interviewRepository.findByEmail(name);
     }
 
 }
