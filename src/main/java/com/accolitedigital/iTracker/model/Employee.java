@@ -1,7 +1,5 @@
 package com.accolitedigital.iTracker.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -14,11 +12,8 @@ public class Employee {
     private int id;
     @Column(nullable = true, length = 64)
     private String profilePicture;
-    @JsonProperty("employeeName")
     private String email;
-    @JsonProperty("employeePassword")
     private String password;
-    @JsonProperty("roles")
     private String role;
     @ElementCollection
     private List<String> skills;

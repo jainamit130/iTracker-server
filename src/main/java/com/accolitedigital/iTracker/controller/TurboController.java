@@ -16,6 +16,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/turbohire")
+@CrossOrigin(origins = "http://ec2-15-206-211-127.ap-south-1.compute.amazonaws.com:8080")
 @EnableScheduling
 public class TurboController {
 
@@ -43,20 +44,20 @@ public class TurboController {
         ObjectMapper mapper=new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
         Turbohire[] turbohires = mapper.readValue(rawJson, Turbohire[].class);
-        List<Turbohire> turboList=new ArrayList<Turbohire>(List.of(turbohires));
+        List<Turbohire> turboList=new ArrayList<>(List.of(turbohires));
         turboService.saveAllTurboData(turboList);
         return "All the Turbohire data is added to database!";
     }
 
     @GetMapping("/stats")
-    public String interviewsStats(@RequestHeader String interviewer,@RequestHeader(required = false)Long startDate,@RequestHeader(required = false)Long endDate){
-        long monthlyCount=turboService.countInterviewsThisMonth(interviewer);
-        long yearlyCount=turboService.countInterviewsThisYear(interviewer);
-        long quarterlyCount=turboService.countInterviewsLastQuarter(interviewer);
-        long weeklyCount=turboService.countWeeklyInterviews(interviewer);
+    public String interviewsStats(@RequestParam String email,@RequestParam(required = false)Long startDate,@RequestHeader(required = false)Long endDate){
+        long monthlyCount=turboService.countInterviewsThisMonth(email);
+        long yearlyCount=turboService.countInterviewsThisYear(email);
+        long quarterlyCount=turboService.countInterviewsLastQuarter(email);
+        long weeklyCount=turboService.countWeeklyInterviews(email);
         long rangeCount=0;
         if(startDate!=null && endDate!=null)
-        rangeCount=turboService.countInterviewsBetweenRange(interviewer,startDate,endDate);
+            rangeCount=turboService.countInterviewsBetweenRange(email,startDate,endDate);
         return "{\"currentMonth\":"+monthlyCount+","+
                 "\"yearToDate\":"+yearlyCount+","+
                 "\"lastQuarter\":"+quarterlyCount+","+

@@ -23,18 +23,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee saveEmployee(Employee employee) {
+    public void saveEmployee(Employee employee) {
         employee.setPassword(passwordEncoder.encode(employee.getPassword()));
-        return employeeRepository.save(employee);
+        employeeRepository.save(employee);
     }
 
     @Override
-    public List<Employee> saveAllEmployee(List<Employee> employees){
+    public void saveAllEmployee(List<Employee> employees){
         for (Employee employee:employees) {
             employee.setPassword(passwordEncoder.encode(employee.getPassword()));
             employeeRepository.save(employee);
         }
-        return employees;
     }
 
     @Override
@@ -43,9 +42,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee updateEmployee(Integer id,Employee updatedEmployee){
+    public void updateEmployee(Employee updatedEmployee){
         updatedEmployee.setPassword(passwordEncoder.encode(updatedEmployee.getPassword()));
-        return employeeRepository.save(updatedEmployee);
+        employeeRepository.save(updatedEmployee);
     }
 
     @Override

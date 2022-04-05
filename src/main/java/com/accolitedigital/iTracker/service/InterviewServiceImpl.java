@@ -6,8 +6,7 @@ import com.accolitedigital.iTracker.repository.InterviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,9 +18,28 @@ public class InterviewServiceImpl implements InterviewService {
     private EmployeeRepository employeeRepository;
 
     @Override
-    public Interview saveInterview(Interview interview) {
+    public void saveInterview(Interview interview) {
+        List<Interview> interviews=new ArrayList<>();
         interview.setEmployee(employeeRepository.findByEmail(interview.getEmail()));
-        return interviewRepository.save(interview);
+        if(!interview.getRecurringType()){
+            interview.setStartDate(interview.getStartDate());
+            while(interview.getStartDate()<interview.getEndDate()){
+                Interview newInstance=new Interview(interview);
+                newInstance.setEndDate(newInstance.getStartDate()+3600000);
+                interviews.add(newInstance);
+                interview.setStartDate(interview.getStartDate()+(86400000*7));
+            }
+        }
+        else{
+            interview.setStartDate(interview.getStartDate());
+            while(interview.getStartDate()<interview.getEndDate()){
+                Interview newInstance=new Interview(interview);
+                newInstance.setEndDate(newInstance.getStartDate()+3600000);
+                interviews.add(newInstance);
+                interview.setStartDate(interview.getStartDate()+86400000);
+            }
+        }
+        interviewRepository.saveAll(interviews);
     }
 
     @Override
@@ -30,8 +48,9 @@ public class InterviewServiceImpl implements InterviewService {
     }
 
     @Override
-    public Interview updateInterview(Integer id, Interview updatedInterview){
-        return interviewRepository.save(updatedInterview);
+    public void updateInterview(Interview updatedInterview){
+        updatedInterview.setEmployee(employeeRepository.findByEmail(updatedInterview.getEmail()));
+        interviewRepository.save(updatedInterview);
     }
 
     @Override
@@ -39,21 +58,13 @@ public class InterviewServiceImpl implements InterviewService {
         interviewRepository.deleteById(id); }
 
     @Override
-    public List<Interview> getTodayInterviews() {
-        LocalDateTime now = LocalDateTime.now();
-        long startDate= now.toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli();
-        long endDate=now.plusDays(1).toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli();
-        return interviewRepository.findByDateBetween(startDate,endDate);
-    }
-
-    @Override
-    public List<Interview> getInterviewsBetweenGivenRange(Long startDate, Long endDate) {
-        return interviewRepository.findByDateBetween(startDate,endDate);
-    }
-
-    @Override
     public List<Interview> getInterviewsFromName(String name) {
         return interviewRepository.findByEmail(name);
+    }
+
+    @Override
+    public List<Interview> getInterviewsOnSkillAndRound(String skill, String round,Long startDate,Long endDate) {
+        return interviewRepository.findBySkillAndRoundAndStartDateBetween(skill,round,startDate,endDate);
     }
 
 }

@@ -1,7 +1,5 @@
 package com.accolitedigital.iTracker.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.*;
 
 @Entity
@@ -10,23 +8,27 @@ public class Interview {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @JsonProperty("name")
     private String email;
     private String skill;
     private String round;
-    private Long date;
-    /*
-    recurringType
-    True= All Days between the start and end date (by default)
-    False= One Day in a week
-     */
+    private Long startDate;
+    @Transient
     private Boolean recurringType;
     private Long endDate;
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    public Interview() {
+    public Interview(){
+    }
+
+    public Interview(Interview interview) {
+        this.setEmail(interview.getEmail());
+        this.setSkill(interview.getSkill());
+        this.setRound(interview.getRound());
+        this.setStartDate(interview.getStartDate());
+        this.setEndDate(interview.getEndDate());
+        this.setEmployee(interview.getEmployee());
     }
 
     public int getId() {
@@ -45,12 +47,12 @@ public class Interview {
         this.email = email;
     }
 
-    public Long getDate() {
-        return date;
+    public Long getStartDate() {
+        return startDate;
     }
 
-    public void setDate(Long date) {
-        this.date = date;
+    public void setStartDate(Long startDate) {
+        this.startDate = startDate;
     }
 
     public Long getEndDate() {
@@ -77,6 +79,14 @@ public class Interview {
         this.round = round;
     }
 
+    public Boolean getRecurringType() {
+        return recurringType;
+    }
+
+    public void setRecurringType(Boolean recurringType) {
+        this.recurringType = recurringType;
+    }
+
     public Employee getEmployee() {
         return employee;
     }
@@ -84,4 +94,5 @@ public class Interview {
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }
+
 }
