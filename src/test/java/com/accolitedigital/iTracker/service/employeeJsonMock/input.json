@@ -1,0 +1,156 @@
+[
+  {
+    "id": 1,
+    "pictureUrl":"https://drive.google.com/file/d/1hw7OzpjKibzNK0jVuku2NpDsveew8fB3/view?usp=sharing",
+    "email": "Eveline.Hagenes@yahoo.com",
+    "name": "Eveline Hagenes",
+    "password": "myPassword1",
+    "role": "ROLE_USER",
+    "skills": [
+      "javascript",
+      "python",
+      "sql"
+    ]
+  },
+  {
+    "id": 2,
+    "pictureUrl":"https://drive.google.com/file/d/1H0ep05DFQ6giWdhaXpILwbzxB8KIrmrP/view?usp=sharing",
+    "email": "Jada95@yahoo.com",
+    "name": "Jada fallon",
+    "password": "myPassword2",
+    "role": "ROLE_USER",
+    "skills": [
+      "spring",
+      "reactjs",
+      "c"
+    ]
+  },
+  {
+    "id": 3,
+    "pictureUrl":"https://drive.google.com/file/d/1jHU3kJ5ZidfdXcu6GB3roRCZhqI-y13l/view?usp=sharing",
+    "email": "Tina_Maggio@gmail.com",
+    "name": "Tina Maggi",
+    "password": "myPassword3",
+    "role": "ROLE_USER",
+    "skills": [
+      "python",
+      "angular"
+    ]
+  },
+  {
+    "id": 4,
+    "pictureUrl":"https://drive.google.com/file/d/1hkbWu21g76V4edQ01JSN-lSOdB1HtXC1/view?usp=sharing",
+    "email": "Rylee.Crooks@yahoo.com",
+    "name": "Rylee Crooks",
+    "password": "myPassword4",
+    "role": "ROLE_USER",
+    "skills": [
+      "java",
+      "angular"
+    ]
+  },
+  {
+    "id": 5,
+    "pictureUrl":"https://drive.google.com/file/d/1hkbWu21g76V4edQ01JSN-lSOdB1HtXC1/view?usp=sharing",
+    "email": "Nat_McClure@gmail.com",
+    "name": "Nat McClure",
+    "password": "myPassword5",
+    "role": "ROLE_USER",
+    "skills": [
+      "java",
+      "react native"
+    ]
+  },
+  {
+    "id": 6,
+    "email": "Jovan95@hotmail.com",
+    "pictureUrl":"https://drive.google.com/file/d/1VQL4MHIYJvpx3fKWvle6JRJapnLxQvhF/view?usp=sharing",
+    "name": "Jovan Joshua",
+    "password": "myPassword6",
+    "role": "ROLE_USER",
+    "skills": [
+      "java",
+      "react native"
+    ]
+  },
+  {
+    "id": 7,
+    "email": "Harmon.Hoppe@yahoo.com",
+    "pictureUrl":"https://drive.google.com/file/d/1TfMS8IvNY3DRINFuD3hvBsYcopsjpOnx/view?usp=sharing",
+    "name": "Harmon Hoppe",
+    "password": "myPassword7",
+    "role": "ROLE_USER",
+    "skills": [
+      "sql",
+      "cHash"
+    ]
+  },
+  {
+    "id": 8,
+    "email": "Stefan78@yahoo.com",
+    "pictureUrl":"https://drive.google.com/file/d/1bKDmwgFwti1rjXDUXjZ2fJqesHcwoWQu/view?usp=sharing",
+    "name": "Stefan Smith",
+    "password": "myPassword8",
+    "role": "ROLE_USER",
+    "skills": [
+      "sql",
+      "python"
+    ]
+  },
+  {
+    "id": 9,
+    "email": "Bennett_Harvey@gmail.com",
+    "pictureUrl":"https://drive.google.com/file/d/18dq-2VybQ0U3Glyqo6xvejP4OrneRN7Z/view?usp=sharing",
+    "name": "Bennett Harvey",
+    "password": "myPassword9",
+    "role": "ROLE_USER",
+    "skills": [
+      "sql",
+      "cHash"
+    ]
+  },
+  {
+    "id": 10,
+    "email": "Christophe_Smitham95@yahoo.com",
+    "pictureUrl":"https://drive.google.com/file/d/1ZwNhiZoOZuM2eKCb27NuCMl6EuSxVTuh/view?usp=sharing",
+    "name": "Christophe Smitham",
+    "password": "myPassword10",
+    "role": "ROLE_USER",
+    "skills": [
+      "javascript",
+      "flutter"
+    ]
+  },
+  {
+    "id": 11,
+    "email": "sumeer.jain@accolitedigital.com",
+    "pictureUrl":"https://drive.google.com/file/d/1QEsqO5Hrk0fI2gh49N5oHjDvxYmBhlRF/view?usp=sharing",
+    "name": "Sumeer Jain",
+    "password": "myPassword11",
+    "role": "ROLE_ADMIN"
+  },
+  {
+    "id": 12,
+    "email": "yash.singh@gmail.com",
+    "pictureUrl":"https://drive.google.com/file/d/1z2ehqG_mRGdcRxDZRQ_nKZbAvvGhRAOq/view?usp=sharing",
+    "name": "Yash Singh",
+    "password": "myPassword12",
+    "role": "ROLE_ADMIN"
+  },
+  {
+    "id": 13,
+    "email": "jainamit95@yahoo.com",
+    "pictureUrl":"https://drive.google.com/file/d/1v0ayLQF8X3Jn3mIQCZy5u5OZL0gt8ElJ/view?usp=sharing",
+    "name": "Amit Jain",
+    "password": "myPassword13",
+    "role": "ROLE_ADMIN"
+  },
+  {
+    "id": 14,
+    "email": "aastha.grover95@yahoo.com",
+    "pictureUrl":"https://drive.google.com/file/d/1ubtZWHnSEalUYxOiQx6vHmzLSljero1r/view?usp=sharing",
+    "name": "Aastha Grover",
+    "password": "myPassword14",
+    "role": "ROLE_ADMIN"
+  }
+]

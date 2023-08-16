@@ -1,5 +1,6 @@
 package com.accolitedigital.iTracker.service;
 
+import com.accolitedigital.iTracker.model.Stats;
 import com.accolitedigital.iTracker.model.Turbohire;
 import com.accolitedigital.iTracker.repository.TurboRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -21,6 +20,9 @@ import java.util.List;
 public class TurboService {
 
     private final RestTemplate restTemplate;
+
+    @Autowired
+    public Stats stats;
 
     @Autowired
     public TurboService(RestTemplate restTemplate) {
@@ -32,7 +34,7 @@ public class TurboService {
 
     public List<Turbohire> saveAllTurboData(List<Turbohire> turbohires) throws ParseException {
         for (Turbohire turbohire:turbohires) {
-            turbohire.setDateTimeInMilli(Timestamp.valueOf(turbohire.getEvaluationDateTime().substring(0,10)+" "+turbohire.getEvaluationDateTime().substring(11)).getTime());
+            turbohire.setDateTimeInMilli(Timestamp.valueOf(turbohire.getEvaluationDateTime().substring(0,10)+" "+turbohire.getEvaluationDateTime().substring(11,19)).getTime());
         }
         return turboRepository.saveAll(turbohires);
     }
@@ -45,52 +47,79 @@ public class TurboService {
         return  restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
     }
 
-    public long countWeeklyInterviews(String interviewers) {
-        Calendar cal = Calendar.getInstance();
-        Calendar now=cal;
-        cal.setFirstDayOfWeek(Calendar.MONDAY);
-        return turboRepository.findByInterviewersAndDateTimeInMilliBetween(interviewers,now.getTimeInMillis(),cal.getTimeInMillis()).stream().count();
-    }
+    public Stats countStats(String interviewers,Long startDate, Long endDate)  {
 
-    public long countInterviewsBetweenRange(String interviewers, Long startDate, Long endDate) {
-        return  turboRepository.findByInterviewersAndDateTimeInMilliBetween(interviewers,startDate,endDate).stream().count();
-    }
+        if(!turboRepository.existsByInterviewers(interviewers)){
+            return stats;
+        }
+        Calendar start = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
 
-    public long countInterviewsThisMonth(String interviewer) {
-        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        start.set(Calendar.DAY_OF_WEEK, start.getFirstDayOfWeek()+1);
+        start.set(Calendar.HOUR_OF_DAY,0);
+        start.set(Calendar.MINUTE,0);
+        start.set(Calendar.SECOND,0);
+        stats.setWeeklyCount(turboRepository.findByInterviewersAndDateTimeInMilliBetween(interviewers,start.getTimeInMillis(),end.getTimeInMillis()).stream().count());
 
-        Calendar now1= Calendar.getInstance();
-        Long currentDate= now1.getTimeInMillis();
+        start = Calendar.getInstance();
+        end = Calendar.getInstance();
+        start.set(Calendar.DAY_OF_MONTH, 1);
+        start.set(Calendar.HOUR_OF_DAY,0);
+        start.set(Calendar.MINUTE,0);
+        start.set(Calendar.SECOND,0);
+        stats.setMonthlyCount(turboRepository.findByInterviewersAndDateTimeInMilliBetween(interviewers,start.getTimeInMillis(),end.getTimeInMillis()).stream().count());
 
-        Calendar now2 = Calendar.getInstance();
-        now2.set(Calendar.DAY_OF_MONTH, 1);
-        Long startDate=now2.getTimeInMillis();
+        start = Calendar.getInstance();
+        end = Calendar.getInstance();
+        start.set(Calendar.DAY_OF_YEAR, 1);
+        start.set(Calendar.HOUR_OF_DAY,0);
+        start.set(Calendar.MINUTE,0);
+        start.set(Calendar.SECOND,0);
+        stats.setYearlyCount(turboRepository.findByInterviewersAndDateTimeInMilliBetween(interviewers,start.getTimeInMillis(),end.getTimeInMillis()).stream().count());
 
-        return turboRepository.findByInterviewersAndDateTimeInMilliBetween(interviewer,startDate,currentDate).stream().count();
-    }
+        start = Calendar.getInstance();
+        end = Calendar.getInstance();
+        start.set(Calendar.DAY_OF_MONTH,1);
+        start.add(Calendar.MONTH, -3);
+        start.set(Calendar.HOUR_OF_DAY,0);
+        start.set(Calendar.MINUTE,0);
+        start.set(Calendar.SECOND,0);
+        stats.setQuarterlyCount(turboRepository.findByInterviewersAndDateTimeInMilliBetween(interviewers,start.getTimeInMillis(),end.getTimeInMillis()).stream().count());
 
-    public long countInterviewsThisYear(String interviewer) {
-        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        start = Calendar.getInstance();
+        end = Calendar.getInstance();
+        start.add(Calendar.MONTH,-1);
+        start.set(Calendar.DAY_OF_MONTH,1);
+        start.set(Calendar.HOUR_OF_DAY,0);
+        start.set(Calendar.MINUTE,0);
+        start.set(Calendar.SECOND,0);
+        end.add(Calendar.MONTH,-1);
+        end.set(Calendar.DAY_OF_MONTH,end.getActualMaximum(Calendar.DATE));
+        end.set(Calendar.HOUR_OF_DAY,0);
+        end.set(Calendar.MINUTE,0);
+        end.set(Calendar.SECOND,0);
+        stats.setLastMonthCount(turboRepository.findByInterviewersAndDateTimeInMilliBetween(interviewers,start.getTimeInMillis(),end.getTimeInMillis()).stream().count());
 
-        Calendar now1= Calendar.getInstance();
-        Long currentDate= now1.getTimeInMillis();
+        start=Calendar.getInstance();
+        end=Calendar.getInstance();
+        start.add(Calendar.YEAR,-1);
+        start.set(Calendar.MONTH,0);
+        start.set(Calendar.DAY_OF_MONTH,1);
+        start.set(Calendar.HOUR_OF_DAY,0);
+        start.set(Calendar.MINUTE,0);
+        start.set(Calendar.SECOND,0);
+        end.add(Calendar.YEAR,-1);
+        end.set(Calendar.MONTH,11);
+        end.set(Calendar.DAY_OF_MONTH,31);
+        end.set(Calendar.HOUR_OF_DAY,0);
+        end.set(Calendar.MINUTE,0);
+        end.set(Calendar.SECOND,0);
+        stats.setLastYearCount(turboRepository.findByInterviewersAndDateTimeInMilliBetween(interviewers,start.getTimeInMillis(),end.getTimeInMillis()).stream().count());
 
-        Calendar now2 = Calendar.getInstance();
-        now2.set(Calendar.DAY_OF_YEAR, 1);
-        Long startDate=now2.getTimeInMillis();
-
-        return turboRepository.findByInterviewersAndDateTimeInMilliBetween(interviewer,startDate,currentDate).stream().count();
-    }
-
-    public long countInterviewsLastQuarter(String interviewer) {
-
-        Calendar now1= Calendar.getInstance();
-        Long currentDate= now1.getTimeInMillis();
-
-        Calendar now2 = Calendar.getInstance();
-        now2.add(Calendar.MONTH, -4);
-        Long startDate=now2.getTimeInMillis();
-
-        return turboRepository.findByInterviewersAndDateTimeInMilliBetween(interviewer,startDate,currentDate).stream().count();
+        stats.setRangeCount(0L);
+        if(startDate!=null && endDate!=null) {
+            stats.setRangeCount(turboRepository.findByInterviewersAndDateTimeInMilliBetween(interviewers, startDate, endDate).stream().count());
+        }
+        return stats;
     }
 }

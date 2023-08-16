@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/recruiterView")
-@CrossOrigin(origins = "http://ec2-15-206-211-127.ap-south-1.compute.amazonaws.com:8080")
+@CrossOrigin(origins = "*")
 public class RecruiterController {
 
     @Autowired

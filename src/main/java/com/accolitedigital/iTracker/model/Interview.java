@@ -12,7 +12,7 @@ public class Interview {
     private String skill;
     private String round;
     private Long startDate;
-    @Transient
+    @Column(columnDefinition = "BOOLEAN")
     private Boolean recurringType;
     private Long endDate;
     @ManyToOne
@@ -28,6 +28,7 @@ public class Interview {
         this.setRound(interview.getRound());
         this.setStartDate(interview.getStartDate());
         this.setEndDate(interview.getEndDate());
+        this.setRecurringType(interview.getRecurringType());
         this.setEmployee(interview.getEmployee());
     }
 
@@ -95,4 +96,17 @@ public class Interview {
         this.employee = employee;
     }
 
+    @Override
+    public String toString() {
+        return "Interview{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", skill='" + skill + '\'' +
+                ", round='" + round + '\'' +
+                ", startDate=" + startDate +
+                ", recurringType=" + recurringType +
+                ", endDate=" + endDate +
+                ", employee=" + employee +
+                '}';
+    }
 }

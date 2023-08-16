@@ -1,6 +1,8 @@
 package com.accolitedigital.iTracker.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -10,13 +12,31 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column(nullable = true, length = 64)
-    private String profilePicture;
+    @Column(nullable = true, length = 1000)
+    private String pictureUrl;
+    @Email(message = "Email is invalid!")
+    @NotBlank
     private String email;
+    @NotBlank(message = "Name cannot be blank!")
+    private String name;
+    @NotBlank(message = "Password cannot be blank!")
     private String password;
+    @NotBlank(message = "Role must be assigned")
     private String role;
     @ElementCollection
     private List<String> skills;
+
+    public Employee() {
+    }
+
+    public Employee(String pictureUrl, String email, String name, String password, String role, List<String> skills) {
+        this.pictureUrl = pictureUrl;
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.role = role;
+        this.skills = skills;
+    }
 
     public int getId() {
         return id;
@@ -26,12 +46,12 @@ public class Employee {
         this.id = id;
     }
 
-    public String getProfilePicture() {
-        return profilePicture;
+    public String getPictureUrl() {
+        return pictureUrl;
     }
 
-    public void setProfilePicture(String profilePicture) {
-        this.profilePicture = profilePicture;
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 
     public String getEmail() {
@@ -40,6 +60,14 @@ public class Employee {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
@@ -66,4 +94,16 @@ public class Employee {
         this.skills = skills;
     }
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", pictureUrl='" + pictureUrl + '\'' +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                ", skills=" + skills +
+                '}';
+    }
 }

@@ -1,5 +1,6 @@
 package com.accolitedigital.iTracker.service;
 
+import com.accolitedigital.iTracker.exception.UserNotFoundException;
 import com.accolitedigital.iTracker.model.Employee;
 
 import java.util.List;
@@ -10,5 +11,5 @@ public interface EmployeeService {
     List<Employee> getAllEmployees();
     void updateEmployee(Employee employee);
     void deleteEmployee(Integer id);
-    Employee getEmployeeByEmail(String name);
+    Employee getEmployeeByEmail(String name) throws UserNotFoundException;
 }

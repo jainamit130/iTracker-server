@@ -4,7 +4,9 @@ import com.accolitedigital.iTracker.filters.JwtRequestFilter;
 import com.accolitedigital.iTracker.service.LoginDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,9 +16,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+@Configuration
 @EnableWebSecurity
-public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
+public class SecurityConfigurer extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     @Autowired
     private LoginDetailService loginDetailService;
@@ -24,6 +29,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     private JwtRequestFilter jwtRequestFilter;
     @Autowired
     private UserDetailsService jwtService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -32,7 +39,15 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable();
+
+//        httpSecurity
+//                .authorizeRequests().anyRequest()
+//                .authenticated()
+//                .and()
+//                .oauth2Login();
+
+        httpSecurity
+                .csrf().disable();
 //                .authorizeRequests()
 //                .antMatchers("/authenticate").permitAll()
 //                .antMatchers("/recruiterView/**").hasAuthority("ROLE_ADMIN")
@@ -40,7 +55,13 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 //                .anyRequest().authenticated()
 //                .and().exceptionHandling().and().sessionManagement()
 //                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//        httpSecurity.oauth2Login();
 //        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedMethods("*");
     }
 
     @Override

@@ -1,12 +1,11 @@
 package com.accolitedigital.iTracker.service;
 
 import com.accolitedigital.iTracker.model.Interview;
-import com.accolitedigital.iTracker.repository.EmployeeRepository;
 import com.accolitedigital.iTracker.repository.InterviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -15,31 +14,16 @@ public class InterviewServiceImpl implements InterviewService {
     @Autowired
     private InterviewRepository interviewRepository;
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private InterviewValidationService interviewValidationService;
 
     @Override
-    public void saveInterview(Interview interview) {
-        List<Interview> interviews=new ArrayList<>();
-        interview.setEmployee(employeeRepository.findByEmail(interview.getEmail()));
-        if(!interview.getRecurringType()){
-            interview.setStartDate(interview.getStartDate());
-            while(interview.getStartDate()<interview.getEndDate()){
-                Interview newInstance=new Interview(interview);
-                newInstance.setEndDate(newInstance.getStartDate()+3600000);
-                interviews.add(newInstance);
-                interview.setStartDate(interview.getStartDate()+(86400000*7));
-            }
-        }
-        else{
-            interview.setStartDate(interview.getStartDate());
-            while(interview.getStartDate()<interview.getEndDate()){
-                Interview newInstance=new Interview(interview);
-                newInstance.setEndDate(newInstance.getStartDate()+3600000);
-                interviews.add(newInstance);
-                interview.setStartDate(interview.getStartDate()+86400000);
-            }
-        }
-        interviewRepository.saveAll(interviews);
+    public Integer saveInterview(Interview interview) {
+        if(interviewValidationService.slotRangeValidation(interview)==0)
+            return interviewValidationService.getStatus();
+        List<Interview> interviews=interviewValidationService.slotDivision(interview);
+        if(interviewValidationService.slotOverlapValidation(interviews)==1)
+            interviewRepository.saveAll(interviews);
+        return interviewValidationService.getStatus();
     }
 
     @Override
@@ -48,9 +32,13 @@ public class InterviewServiceImpl implements InterviewService {
     }
 
     @Override
-    public void updateInterview(Interview updatedInterview){
-        updatedInterview.setEmployee(employeeRepository.findByEmail(updatedInterview.getEmail()));
-        interviewRepository.save(updatedInterview);
+    public Integer updateInterview(Interview updatedInterview){
+        updatedInterview=interviewValidationService.setSlotEmployee(updatedInterview);
+        if(interviewValidationService.slotRangeValidation(updatedInterview)==0)
+            return interviewValidationService.getStatus();
+        if (interviewValidationService.slotOverlapValidation(Arrays.asList(updatedInterview))==1)
+            interviewRepository.save(updatedInterview);
+        return interviewValidationService.getStatus();
     }
 
     @Override
@@ -58,13 +46,19 @@ public class InterviewServiceImpl implements InterviewService {
         interviewRepository.deleteById(id); }
 
     @Override
-    public List<Interview> getInterviewsFromName(String name) {
+    public List<Interview> getInterviewsFromEmail(String name) {
         return interviewRepository.findByEmail(name);
     }
 
     @Override
     public List<Interview> getInterviewsOnSkillAndRound(String skill, String round,Long startDate,Long endDate) {
         return interviewRepository.findBySkillAndRoundAndStartDateBetween(skill,round,startDate,endDate);
+    }
+
+    @Override
+    public void saveAllInterviews(List<Interview> interviews) {
+        for (Interview interview:interviews)
+            this.saveInterview(interview);
     }
 
 }

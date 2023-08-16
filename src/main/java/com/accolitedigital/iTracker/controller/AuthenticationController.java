@@ -2,6 +2,7 @@ package com.accolitedigital.iTracker.controller;
 
 import com.accolitedigital.iTracker.model.AuthenticationRequest;
 import com.accolitedigital.iTracker.model.AuthenticationResponse;
+import com.accolitedigital.iTracker.service.EmployeeService;
 import com.accolitedigital.iTracker.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +15,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/")
-@CrossOrigin(origins = "http://ec2-15-206-211-127.ap-south-1.compute.amazonaws.com:8080")
+@CrossOrigin(origins = "*")
 public class AuthenticationController {
-
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private EmployeeService employeeService;
     @Autowired
     private JwtUtil jwtTokenUtil;
 

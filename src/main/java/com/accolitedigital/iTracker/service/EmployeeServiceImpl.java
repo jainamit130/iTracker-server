@@ -1,5 +1,6 @@
 package com.accolitedigital.iTracker.service;
 
+import com.accolitedigital.iTracker.exception.UserNotFoundException;
 import com.accolitedigital.iTracker.model.Employee;
 import com.accolitedigital.iTracker.repository.EmployeeRepository;
 
@@ -52,8 +53,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.deleteById(id); }
 
     @Override
-    public Employee getEmployeeByEmail(String name){
-        return employeeRepository.findByEmail(name);
+    public Employee getEmployeeByEmail(String email) throws UserNotFoundException {
+        Employee employee= employeeRepository.findByEmail(email);
+        if (employee != null)
+            return employee;
+        else
+            throw new UserNotFoundException("Employee with email: "+email+" is not present in the records!");
     }
 }
 

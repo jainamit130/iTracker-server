@@ -1,5 +1,6 @@
 package com.accolitedigital.iTracker.controller;
 
+import com.accolitedigital.iTracker.model.Stats;
 import com.accolitedigital.iTracker.model.Turbohire;
 import com.accolitedigital.iTracker.service.TurboService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,14 +17,13 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/turbohire")
-@CrossOrigin(origins = "http://ec2-15-206-211-127.ap-south-1.compute.amazonaws.com:8080")
+@CrossOrigin(origins = "*")
 @EnableScheduling
 public class TurboController {
 
     public TurboController(TurboService turboService) {
         this.turboService = turboService;
     }
-
     private final TurboService turboService;
 
     @Scheduled(cron = "0 0 0 * * ?")
@@ -39,7 +39,8 @@ public class TurboController {
         Date currentDate = cal.getTime();
         String startDate = dateFormat.format(currentDate);
 
-        String url="https://api.turbohire.co/api/analytics/evaluations?startDate="+startDate+"&endDate="+endDate;
+//        String url="https://api.turbohire.co/api/analytics/evaluations?startDate="+startDate+"&endDate="+endDate;
+        String url="http://localhost:3000/turbohire";
         String rawJson=turboService.consumeTurboAPI(url).getBody();
         ObjectMapper mapper=new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
@@ -50,19 +51,15 @@ public class TurboController {
     }
 
     @GetMapping("/stats")
-    public String interviewsStats(@RequestParam String email,@RequestParam(required = false)Long startDate,@RequestHeader(required = false)Long endDate){
-        long monthlyCount=turboService.countInterviewsThisMonth(email);
-        long yearlyCount=turboService.countInterviewsThisYear(email);
-        long quarterlyCount=turboService.countInterviewsLastQuarter(email);
-        long weeklyCount=turboService.countWeeklyInterviews(email);
-        long rangeCount=0;
-        if(startDate!=null && endDate!=null)
-            rangeCount=turboService.countInterviewsBetweenRange(email,startDate,endDate);
-        return "{\"currentMonth\":"+monthlyCount+","+
-                "\"yearToDate\":"+yearlyCount+","+
-                "\"lastQuarter\":"+quarterlyCount+","+
-                "\"lastWeek\":"+weeklyCount+","+
-                "\"inGivenRange\":"+rangeCount+"}";
+    public String interviewsStats(@RequestParam String email,@RequestParam(required = false)Long startDate,@RequestParam(required = false)Long endDate){
+        Stats stats=turboService.countStats(email, startDate, endDate);
+        return "{\"currentMonth\":"+stats.getMonthlyCount()+","+
+                "\"yearToDate\":"+stats.getYearlyCount()+","+
+                "\"lastQuarter\":"+stats.getQuarterlyCount()+","+
+                "\"lastWeek\":"+stats.getWeeklyCount()+","+
+                "\"lastMonth\":"+stats.getLastMonthCount()+","+
+                "\"lastYear\":"+stats.getLastYearCount()+","+
+                "\"inGivenRange\":"+stats.getRangeCount()+"}";
     }
 }
 
